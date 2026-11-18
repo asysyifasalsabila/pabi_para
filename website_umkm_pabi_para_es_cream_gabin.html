@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pabi Para - Es Cream Gabin</title>
+    
+    <!-- Menggunakan Tailwind CSS untuk styling cepat dan responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Menggunakan Google Fonts (Fredoka & Plus Jakarta Sans) agar tampilan ceria & ramah UMKM -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Konfigurasi Warna Tema Sesuai Logo Pabi Para -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pabiPink: '#F15B93',      // Pink cerah utama logo
+                        pabiPinkDark: '#D9437B',  // Pink lebih gelap untuk hover
+                        pabiSoft: '#FFE6F0',      // Pink lembut untuk latar belakang
+                        pabiChoco: '#5C3317',     // Cokelat pekat tulisan & biskuit
+                        pabiCream: '#FFF5E1',     // Krem lembut es krim & gabin
+                        pabiBiscuit: '#F4A236',   // Warna keemasan biskuit gabin
+                    },
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFF9FB;
+            color: #4A2511;
+        }
+        h1, h2, h3, .font-brand {
+            font-family: 'Fredoka', sans-serif;
+        }
+        /* Animasi halus untuk elemen melayang */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: floatSlow 3.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-pabiPink selection:text-white">
+
+    <!-- =====================================================================
+         1. HEADER & NAVIGASI
+         ===================================================================== -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-pabiSoft shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+            
+            <!-- Brand & Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full p-0.5 bg-gradient-to-tr from-pabiPink to-pink-300 shadow-md group-hover:scale-105 transition-transform">
+                    <!-- Logo Utama dari file lokal -->
+                    <img 
+                        src="WhatsApp Image 2026-11-18 at 14.50.05.jpeg" 
+                        alt="Logo Pabi Para Es Cream Gabin" 
+                        class="w-full h-full object-cover rounded-full bg-pabiPink"
+                        onerror="this.style.display='none'; document.getElementById('fallback-header-logo').style.display='flex';"
+                    >
+                    <!-- SVG Cadangan (Fallback) jika file gambar belum ada di folder yang sama -->
+                    <div id="fallback-header-logo" style="display: none;" class="w-full h-full rounded-full bg-pabiPink items-center justify-center border-2 border-pink-200 overflow-hidden">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <circle cx="50" cy="50" r="48" fill="#F15B93"/>
+                            <rect x="25" y="25" width="22" height="22" rx="4" transform="rotate(-12 36 36)" fill="#F4A236" stroke="#5C3317" stroke-width="2"/>
+                            <rect x="52" y="25" width="22" height="22" rx="4" transform="rotate(12 63 36)" fill="#F4A236" stroke="#5C3317" stroke-width="2"/>
+                            <text x="50" y="64" text-anchor="middle" fill="#FFFFFF" font-family="Fredoka, sans-serif" font-weight="bold" font-size="16">PabiPara</text>
+                            <text x="50" y="77" text-anchor="middle" fill="#FFF5E1" font-family="sans-serif" font-weight="bold" font-size="7">Es Cream Gabin</text>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1 font-brand text-xl sm:text-2xl font-bold leading-none">
+                        <span class="text-pabiChoco">Pabi</span>
+                        <span class="text-pabiPink">Para</span>
+                    </div>
+                    <p class="text-xs sm:text-sm font-semibold text-amber-800/80 tracking-wide">Es Cream Gabin</p>
+                </div>
+            </a>
+
+            <!-- Navigasi & Tombol Keranjang -->
+            <div class="flex items-center gap-3 sm:gap-5">
+                <a href="#katalog" class="hidden sm:inline-block text-sm font-bold text-pabiChoco hover:text-pabiPink transition-colors">
+                    Menu Katalog
+                </a>
+                <a href="#tentang" class="hidden sm:inline-block text-sm font-bold text-pabiChoco hover:text-pabiPink transition-colors">
+                    Tentang Kami
+                </a>
+                
+                <!-- Tombol Buka Keranjang Belanja -->
+                <button 
+                    onclick="bukaKeranjang()" 
+                    class="relative flex items-center gap-2 bg-pabiPink hover:bg-pabiPinkDark active:scale-95 text-white font-bold px-4 py-2.5 rounded-full shadow-md shadow-pink-200 transition-all cursor-pointer"
+                    aria-label="Buka Keranjang Belanja"
+                >
+                    <!-- Ikon Keranjang -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span class="text-sm">Keranjang</span>
+                    <!-- Badge Jumlah Item -->
+                    <span id="badge-keranjang" class="bg-pabiChoco text-pabiCream text-xs font-extrabold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white">
+                        0
+                    </span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         2. HERO SECTION (SAPAAN UTAMA)
+         ===================================================================== -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-pabiSoft via-pink-50 to-[#FFF9FB] pt-8 pb-14 sm:pt-12 sm:pb-20">
+        <!-- Dekorasi Latar -->
+        <div class="absolute -top-10 -left-10 w-40 h-40 bg-pabiPink/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute top-20 -right-10 w-56 h-56 bg-amber-300/20 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
+                
+                <!-- Teks Ajakan (Kiri) -->
+                <div class="flex-1 text-center md:text-left">
+                    <span class="inline-block bg-white text-pabiPink border border-pink-200 font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full shadow-sm mb-4">
+                        🍦 Camilan Dingin Favorit Semua Kalangan!
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-bold text-pabiChoco leading-tight mb-4">
+                        Renyahnya Biskuit Gabin Berpadu <span class="text-pabiPink">Es Krim Lembut!</span>
+                    </h1>
+                    <p class="text-base sm:text-lg text-amber-950/80 mb-7 leading-relaxed max-w-xl mx-auto md:mx-0">
+                        Nikmati sensasi manis, dingin, dan renyah dalam setiap gigitan <strong>Pabi Para Es Cream Gabin</strong>. Dibuat segar setiap hari dengan dua varian rasa spesial yang bikin ketagihan!
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">
+                        <a href="#katalog" class="w-full sm:w-auto text-center bg-pabiPink hover:bg-pabiPinkDark text-white font-bold text-base px-7 py-3.5 rounded-full shadow-lg shadow-pink-300/50 transition-all hover:-translate-y-0.5">
+                            Lihat Menu & Pesan Sekarang 👇
+                        </a>
+                        <button onclick="bukaKeranjang()" class="w-full sm:w-auto text-center bg-white hover:bg-pabiCream text-pabiChoco border-2 border-pabiChoco/20 font-bold text-base px-6 py-3 rounded-full transition-all cursor-pointer">
+                            Cek Keranjang (<span id="hero-cart-count">0</span>)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tampilan Logo Besar di Hero (Kanan) -->
+                <div class="flex-shrink-0">
+                    <div class="relative w-56 h-56 sm:w-72 sm:h-72 rounded-full p-2 bg-white shadow-xl shadow-pink-200/80 animate-float mx-auto">
+                        <img 
+                            src="WhatsApp Image 2026-11-18 at 14.50.05.jpeg" 
+                            alt="Logo Besar Pabi Para Es Cream Gabin" 
+                            class="w-full h-full object-cover rounded-full bg-pabiPink"
+                            onerror="this.style.display='none'; document.getElementById('fallback-hero-logo').style.display='flex';"
+                        >
+                        <!-- SVG Cadangan Besar (Mirip Logo Pabi Para) -->
+                        <div id="fallback-hero-logo" style="display: none;" class="w-full h-full rounded-full bg-pabiPink flex-col items-center justify-center border-4 border-pink-200 p-4 text-center">
+                            <svg viewBox="0 0 220 220" class="w-full h-full">
+                                <circle cx="110" cy="110" r="104" fill="#F15B93" stroke="#FF9EC2" stroke-width="6"/>
+                                <!-- Ilustrasi Gabin Cokelat Kiri -->
+                                <g transform="translate(42, 42) rotate(-12)">
+                                    <rect x="0" y="14" width="54" height="24" rx="4" fill="#5C3317"/>
+                                    <rect x="-2" y="4" width="58" height="12" rx="4" fill="#F4A236" stroke="#C87A19" stroke-width="2"/>
+                                    <rect x="-2" y="36" width="58" height="12" rx="4" fill="#F4A236" stroke="#C87A19" stroke-width="2"/>
+                                </g>
+                                <!-- Ilustrasi Gabin Cookies & Cream Kanan -->
+                                <g transform="translate(126, 32) rotate(12)">
+                                    <rect x="0" y="14" width="54" height="24" rx="4" fill="#FFF8EE"/>
+                                    <circle cx="12" cy="22" r="2.5" fill="#3E200D"/>
+                                    <circle cx="28" cy="28" r="3" fill="#3E200D"/>
+                                    <circle cx="42" cy="21" r="2.5" fill="#3E200D"/>
+                                    <circle cx="20" cy="32" r="2" fill="#3E200D"/>
+                                    <rect x="-2" y="4" width="58" height="12" rx="4" fill="#F4A236" stroke="#C87A19" stroke-width="2"/>
+                                    <rect x="-2" y="36" width="58" height="12" rx="4" fill="#F4A236" stroke="#C87A19" stroke-width="2"/>
+                                </g>
+                                <!-- Teks Pabi Para -->
+                                <text x="110" y="135" text-anchor="middle" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="6" font-family="Fredoka, sans-serif" font-weight="bold" font-size="34">Pabi Para</text>
+                                <text x="72" y="135" text-anchor="middle" fill="#5C3317" font-family="Fredoka, sans-serif" font-weight="bold" font-size="34">Pabi</text>
+                                <text x="148" y="135" text-anchor="middle" fill="#F15B93" font-family="Fredoka, sans-serif" font-weight="bold" font-size="34">Para</text>
+                                <!-- Subjudul -->
+                                <text x="110" y="162" text-anchor="middle" fill="#FFFFFF" font-family="Fredoka, sans-serif" font-weight="bold" font-size="15">Es Cream Gabin</text>
+                                <rect x="38" y="170" width="66" height="18" rx="9" fill="#5C3317"/>
+                                <text x="71" y="182" text-anchor="middle" fill="#FFFFFF" font-size="9" font-weight="bold">Chocolate</text>
+                                <rect x="112" y="170" width="72" height="18" rx="9" fill="#FFF5E1"/>
+                                <text x="148" y="182" text-anchor="middle" fill="#5C3317" font-size="8" font-weight="bold">Cookies &amp; Cream</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         3. KATALOG PRODUK (2 VARIAN UTAMA SESUAI LOGO)
+         ===================================================================== -->
+    <main id="katalog" class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-12">
+        
+        <!-- Judul Bagian Katalog -->
+        <div class="text-center mb-10">
+            <span class="text-pabiPink font-bold text-sm uppercase tracking-wider">Pilihan Rasa Spesial</span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-pabiChoco mt-1">Katalog Es Cream Gabin</h2>
+            <p class="text-amber-900/75 mt-2 max-w-lg mx-auto text-sm sm:text-base">
+                Pilih varian favoritmu dan masukkan ke keranjang untuk langsung pesan lewat WhatsApp!
+            </p>
+        </div>
+
+        <!-- Container Kartu Produk (Dirender oleh JavaScript agar sinkron dengan data) -->
+        <div id="daftar-produk" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- Kartu produk akan otomatis muncul di sini -->
+        </div>
+
+    </main>
+
+    <!-- =====================================================================
+         4. SECTION KEUNGGULAN SINGKAT UMKM
+         ===================================================================== -->
+    <section id="tentang" class="bg-pabiSoft/70 border-y border-pink-200/70 py-12">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100">
+                    <div class="w-12 h-12 bg-pabiSoft text-pabiPink rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+                        🍪
+                    </div>
+                    <h3 class="font-bold text-lg text-pabiChoco mb-1">Gabin Pilihan Renyah</h3>
+                    <p class="text-sm text-amber-900/75">Menggunakan biskuit gabin berkualitas yang tetap renyah dan gurih dipadukan dengan es krim.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100">
+                    <div class="w-12 h-12 bg-pabiSoft text-pabiPink rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+                        🍨
+                    </div>
+                    <h3 class="font-bold text-lg text-pabiChoco mb-1">Es Krim Tebal & Lembut</h3>
+                    <p class="text-sm text-amber-900/75">Isian es krim cokelat pekat dan cookies & cream yang melimpah, manisnya pas tidak bikin enek.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100">
+                    <div class="w-12 h-12 bg-pabiSoft text-pabiPink rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+                        💬
+                    </div>
+                    <h3 class="font-bold text-lg text-pabiChoco mb-1">Pesan Mudah via WA</h3>
+                    <p class="text-sm text-amber-900/75">Pilih varian di website, isi nama & alamat, pesanan otomatis terkirim ke WhatsApp kami.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         5. FOOTER UMKM
+         ===================================================================== -->
+    <footer class="bg-pabiChoco text-pabiCream py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div>
+                <h4 class="font-brand text-xl font-bold text-white">Pabi Para - Es Cream Gabin</h4>
+                <p class="text-sm text-pabiCream/80 mt-1">Camilan Manis, Dingin & Renyah • Chocolate & Cookies and Cream</p>
+            </div>
+            <div class="text-xs text-pabiCream/70">
+                <p>&copy; 2026 UMKM Pabi Para. Dibuat dengan ❤️ untuk project TKJ.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =====================================================================
+         TOMBOL KERANJANG MELAYANG (KHUSUS MOBILE AGAR MUDAH DIJANGKAU)
+         ===================================================================== -->
+    <div id="floating-cart-bar" class="fixed bottom-4 left-4 right-4 z-30 sm:hidden transition-all duration-300 translate-y-24 opacity-0 pointer-events-none">
+        <button 
+            onclick="bukaKeranjang()" 
+            class="w-full bg-pabiChoco text-white font-bold py-3.5 px-5 rounded-2xl shadow-xl flex items-center justify-between border-2 border-pabiPink"
+        >
+            <div class="flex items-center gap-2.5">
+                <span class="bg-pabiPink text-white text-xs font-extrabold px-2.5 py-1 rounded-full" id="mobile-badge-count">0 Item</span>
+                <span class="text-sm">Lihat Keranjang</span>
+            </div>
+            <span class="text-base font-extrabold text-pabiCream" id="mobile-total-price">Rp 0</span>
+        </button>
+    </div>
+
+    <!-- =====================================================================
+         NOTIFIKASI TOAST (PENGGANTI ALERT SAAT TAMBAH PRODUK / VALIDASI)
+         ===================================================================== -->
+    <div id="toast-notifikasi" class="fixed top-20 right-4 z-50 transform translate-x-full opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-pabiChoco text-white px-4 py-3 rounded-2xl shadow-lg border-l-4 border-pabiPink flex items-center gap-3 max-w-xs">
+            <span id="toast-icon" class="text-xl">✅</span>
+            <p id="toast-pesan" class="text-sm font-medium">Produk ditambahkan!</p>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         6. MODAL / PANEL KERANJANG BELANJA & CHECKOUT WHATSAPP
+         ===================================================================== -->
+    <div id="modal-keranjang" class="fixed inset-0 z-50 hidden">
+        <!-- Latar Gelap Transparan (Klik untuk tutup) -->
+        <div onclick="tutupKeranjang()" class="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity"></div>
+
+        <!-- Kontainer Panel Samping Kanan -->
+        <div class="fixed inset-y-0 right-0 max-w-md w-full bg-white shadow-2xl flex flex-col z-10">
+            
+            <!-- Header Modal Keranjang -->
+            <div class="px-5 py-4 bg-pabiSoft border-b border-pink-200 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🛒</span>
+                    <h3 class="font-brand text-xl font-bold text-pabiChoco">Keranjang Belanja</h3>
+                </div>
+                <button onclick="tutupKeranjang()" class="w-9 h-9 rounded-full bg-white text-pabiChoco hover:bg-pabiPink hover:text-white flex items-center justify-center font-bold transition-colors cursor-pointer" aria-label="Tutup Keranjang">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Isi Daftar Belanja (Bisa di-scroll) -->
+            <div class="flex-1 overflow-y-auto p-5 space-y-6">
+                
+                <!-- List Item di Keranjang -->
+                <div id="isi-keranjang" class="space-y-3">
+                    <!-- Item keranjang dirender lewat JS -->
+                </div>
+
+                <!-- Form Data Pemesan (Muncul jika keranjang tidak kosong) -->
+                <div id="form-pemesan-container" class="hidden bg-pink-50/70 p-4 rounded-2xl border border-pink-200 space-y-3">
+                    <h4 class="font-bold text-pabiChoco text-sm flex items-center gap-1.5">
+                        <span>📝</span> Data Pemesan (Untuk WhatsApp)
+                    </h4>
+                    
+                    <div>
+                        <label for="input-nama" class="block text-xs font-bold text-pabiChoco mb-1">Nama Pemesan *</label>
+                        <input 
+                            type="text" 
+                            id="input-nama" 
+                            placeholder="Contoh: Budi Santoso" 
+                            class="w-full px-3.5 py-2.5 text-sm bg-white border border-pink-200 rounded-xl focus:outline-none focus:border-pabiPink focus:ring-2 focus:ring-pabiPink/20"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="input-alamat" class="block text-xs font-bold text-pabiChoco mb-1">Alamat / Catatan Pengiriman *</label>
+                        <textarea 
+                            id="input-alamat" 
+                            rows="2" 
+                            placeholder="Contoh: Jl. Merdeka No. 12 (Tolong bawa sendok plastik ya)" 
+                            class="w-full px-3.5 py-2.5 text-sm bg-white border border-pink-200 rounded-xl focus:outline-none focus:border-pabiPink focus:ring-2 focus:ring-pabiPink/20"
+                        ></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Modal (Total Harga & Tombol Kirim WhatsApp) -->
+            <div id="footer-keranjang" class="p-5 bg-white border-t border-pink-100 space-y-3">
+                <div class="flex items-center justify-between text-sm text-amber-900/80">
+                    <span>Subtotal Pesanan</span>
+                    <span id="subtotal-harga" class="font-semibold">Rp 0</span>
+                </div>
+                <div class="flex items-center justify-between text-lg font-extrabold text-pabiChoco pt-2 border-t border-dashed border-pink-200">
+                    <span>Total Bayar</span>
+                    <span id="total-harga" class="text-pabiPink">Rp 0</span>
+                </div>
+
+                <button 
+                    onclick="pesanViaWhatsApp()" 
+                    id="btn-whatsapp"
+                    class="w-full bg-[#25D366] hover:bg-[#1EBE5D] active:scale-[0.99] text-white font-bold py-3.5 px-5 rounded-2xl shadow-lg shadow-green-200 flex items-center justify-center gap-2.5 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    <!-- Ikon WhatsApp SVG -->
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
+                    </svg>
+                    <span>Pesan via WhatsApp</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         JAVASCRIPT: LOGIKA KATALOG, KERANJANG, & PESAN WHATSAPP
+         ===================================================================== -->
+    <script>
+        /* ===================================================================
+           PENGATURAN TOKO UMKM (SILAKAN UBAH BAGIAN INI SESUAI KEBUTUHAN)
+           =================================================================== */
+        
+        // 1. Ganti nomor WhatsApp tujuan di bawah ini (Gunakan kode negara 62 tanpa tanda + atau 0 di depan)
+        // Contoh: 0812-3456-7890 ditulis menjadi "6287881748547"
+        const NOMOR_WHATSAPP_TOKO = "6287881748547";
+
+        // 2. Data Produk Katalog (Ubah nama, harga, atau deskripsi di sini)
+        const DATA_PRODUK = [
+            {
+                id: "gabin-cokelat",
+                nama: "Es Cream Gabin Chocolate",
+                varianLabel: "Best Seller 🍫",
+                harga: 9500, // Harga dalam Rupiah (Rp 9.500)
+                deskripsi: "Perpaduan es krim cokelat pekat yang lembut dan lumer di mulut, diapit dua lapis biskuit gabin renyah nan gurih.",
+                warnaBadge: "bg-pabiChoco text-white",
+                // Ilustrasi SVG Gabin Cokelat (Menyerupai gambar di logo)
+                ilustrasiSVG: `
+                    <svg viewBox="0 0 240 180" class="w-48 h-36 mx-auto drop-shadow-md">
+                        <!-- Bayangan bawah -->
+                        <ellipse cx="120" cy="155" rx="75" ry="12" fill="#E5B8C9" opacity="0.5"/>
+                        <!-- Biskuit Bawah -->
+                        <g transform="translate(120, 92) rotate(-8) translate(-75, -55)">
+                            <rect x="8" y="65" width="134" height="24" rx="8" fill="#E08B22" stroke="#5C3317" stroke-width="3"/>
+                            <!-- Lapisan Es Krim Cokelat Tebal -->
+                            <path d="M12 34 L138 34 L141 68 Q125 73 110 68 Q95 74 75 68 Q55 74 40 68 Q25 73 9 68 Z" fill="#6D3B1E" stroke="#4A2511" stroke-width="3"/>
+                            <!-- Tekstur Es Krim -->
+                            <path d="M22 48 Q45 43 65 50 T115 47" fill="none" stroke="#8B4F2B" stroke-width="3" stroke-linecap="round"/>
+                            <!-- Biskuit Gabin Atas -->
+                            <rect x="4" y="10" width="142" height="26" rx="8" fill="#F6AA3B" stroke="#5C3317" stroke-width="3"/>
+                            <rect x="10" y="14" width="130" height="16" rx="5" fill="#FBC05E"/>
+                            <!-- Lubang-lubang khas Biskuit Gabin -->
+                            <circle cx="30" cy="22" r="2.2" fill="#C47418"/>
+                            <circle cx="52" cy="22" r="2.2" fill="#C47418"/>
+                            <circle cx="75" cy="22" r="2.2" fill="#C47418"/>
+                            <circle cx="98" cy="22" r="2.2" fill="#C47418"/>
+                            <circle cx="120" cy="22" r="2.2" fill="#C47418"/>
+                        </g>
+                        <!-- Kilauan Ceria -->
+                        <path d="M35 45 L48 55" stroke="#F15B93" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M46 32 L54 46" stroke="#F15B93" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                `
+            },
+            {
+                id: "gabin-cookies-cream",
+                nama: "Es Cream Gabin Cookies & Cream",
+                varianLabel: "Favorit Baru 🍪",
+                harga: 9500, // Harga dalam Rupiah (Rp 9.500)
+                deskripsi: "Es krim vanila susu yang super creamy bertabur melimpahnya remahan biskuit cokelat hitam renyah di antara gabin keemasan.",
+                warnaBadge: "bg-pabiPink text-white",
+                // Ilustrasi SVG Gabin Cookies & Cream (Menyerupai gambar di logo)
+                ilustrasiSVG: `
+                    <svg viewBox="0 0 240 180" class="w-48 h-36 mx-auto drop-shadow-md">
+                        <!-- Bayangan bawah -->
+                        <ellipse cx="120" cy="155" rx="75" ry="12" fill="#E5B8C9" opacity="0.5"/>
+                        <!-- Biskuit Gabin -->
+                        <g transform="translate(120, 92) rotate(8) translate(-75, -55)">
+                            <rect x="8" y="65" width="134" height="24" rx="8" fill="#E08B22" stroke="#5C3317" stroke-width="3"/>
+                            <!-- Lapisan Es Krim Vanilla Cookies & Cream -->
+                            <path d="M12 34 L138 34 L141 68 Q125 73 110 68 Q95 74 75 68 Q55 74 40 68 Q25 73 9 68 Z" fill="#FFF9EE" stroke="#5C3317" stroke-width="3"/>
+                            <!-- Remahan Biskuit Oreo / Cookies -->
+                            <circle cx="26" cy="46" r="4" fill="#3B2112"/>
+                            <circle cx="48" cy="57" r="3.5" fill="#3B2112"/>
+                            <circle cx="66" cy="44" r="4.5" fill="#3B2112"/>
+                            <circle cx="88" cy="56" r="4" fill="#3B2112"/>
+                            <circle cx="112" cy="45" r="3.5" fill="#3B2112"/>
+                            <circle cx="126" cy="58" r="4" fill="#3B2112"/>
+                            <circle cx="36" cy="60" r="2.5" fill="#5C3317"/>
+                            <circle cx="98" cy="42" r="2.5" fill="#5C3317"/>
+                            <!-- Biskuit Gabin Atas -->
+                            <rect x="4" y="10" width="142" height="26" rx="8" fill="#F6AA3B" stroke="#5C3317" stroke-width="3"/>
+                            <rect x="10" y="14" width="130" height="16" rx="5" fill="#FBC05E"/>
+                            <!-- Lubang-lubang khas Biskuit Gabin -->
+                            <circle cx="30" cy="22" r="2.2" fill="#C47418"/>
+                            <circle cx="52" cy="22" r="2.2" fill="#C47418"/>
+                            <circle cx="75" cy="22" r="2.2" fill="#C47418"/>
+                            <circle cx="98" cy="22" r="2.2" fill="#C47418"/>
+                            <circle cx="120" cy="22" r="2.2" fill="#C47418"/>
+                        </g>
+                        <!-- Kilauan Ceria -->
+                        <path d="M205 45 L192 55" stroke="#F15B93" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M194 32 L186 46" stroke="#F15B93" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                `
+            }
+        ];
+
+        /* ===================================================================
+           STATE KERANJANG BELANJA
+           =================================================================== */
+        // Menyimpan daftar belanjaan user dalam bentuk array objek
+        let keranjang = [];
+
+        // Fungsi mengubah angka menjadi format mata uang Rupiah (contoh: 10000 -> "Rp 10.000")
+        function formatRupiah(angka) {
+            return "Rp " + angka.toLocaleString("id-ID");
+        }
+
+        // Menampilkan Toast Notifikasi (pengganti alert bawaan browser)
+        let toastTimeout;
+        function tampilkanNotifikasi(pesan, ikon = "✅") {
+            const toast = document.getElementById("toast-notifikasi");
+            document.getElementById("toast-pesan").textContent = pesan;
+            document.getElementById("toast-icon").textContent = ikon;
+
+            toast.classList.remove("translate-x-full", "opacity-0");
+            toast.classList.add("translate-x-0", "opacity-100");
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove("translate-x-0", "opacity-100");
+                toast.classList.add("translate-x-full", "opacity-0");
+            }, 2500);
+        }
+
+        /* ===================================================================
+           RENDER KATALOG PRODUK KE HALAMAN
+           =================================================================== */
+        function renderKatalog() {
+            const wadahKatalog = document.getElementById("daftar-produk");
+            wadahKatalog.innerHTML = DATA_PRODUK.map(produk => `
+                <div class="bg-white rounded-3xl border-2 border-pink-100 shadow-lg shadow-pink-100/60 overflow-hidden flex flex-col justify-between hover:border-pabiPink/50 hover:-translate-y-1 transition-all duration-300">
+                    <div>
+                        <!-- Area Ilustrasi Produk -->
+                        <div class="relative bg-gradient-to-b from-pabiSoft/80 to-pabiCream/40 pt-8 pb-6 px-6 flex items-center justify-center">
+                            <span class="absolute top-4 left-4 ${produk.warnaBadge} text-xs font-bold px-3 py-1 rounded-full shadow-xs">
+                                ${produk.varianLabel}
+                            </span>
+                            ${produk.ilustrasiSVG}
+                        </div>
+
+                        <!-- Area Informasi Produk -->
+                        <div class="p-6 pb-4">
+                            <h3 class="text-xl sm:text-2xl font-bold text-pabiChoco mb-2">${produk.nama}</h3>
+                            <p class="text-sm text-amber-950/75 leading-relaxed mb-4">
+                                ${produk.deskripsi}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Harga & Tombol Tambah -->
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between gap-4 border-t border-pink-50">
+                        <div>
+                            <span class="block text-xs text-amber-900/60 font-semibold">Harga Satuan</span>
+                            <span class="text-xl sm:text-2xl font-extrabold text-pabiPink">${formatRupiah(produk.harga)}</span>
+                        </div>
+                        <button 
+                            onclick="tambahKeKeranjang('${produk.id}')" 
+                            class="bg-pabiPink hover:bg-pabiPinkDark active:scale-95 text-white font-bold text-sm sm:text-base px-5 py-3 rounded-2xl shadow-md shadow-pink-200 flex items-center gap-2 transition-all cursor-pointer"
+                        >
+                            <span>+ Tambah ke Keranjang</span>
+                        </button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        /* ===================================================================
+           FUNGSI PENGELOLAAN KERANJANG BELANJA
+           =================================================================== */
+        function tambahKeKeranjang(idProduk) {
+            const produk = DATA_PRODUK.find(p => p.id === idProduk);
+            if (!produk) return;
+
+            // Cek apakah produk sudah ada di dalam keranjang
+            const itemAda = keranjang.find(item => item.id === idProduk);
+            if (itemAda) {
+                itemAda.jumlah += 1;
+            } else {
+                keranjang.push({
+                    id: produk.id,
+                    nama: produk.nama,
+                    harga: produk.harga,
+                    jumlah: 1
+                });
+            }
+
+            perbaruiTampilanKeranjang();
+            tampilkanNotifikasi(`${produk.nama} ditambahkan ke keranjang!`, "🍦");
+        }
+
+        function ubahJumlah(idProduk, perubahan) {
+            const index = keranjang.findIndex(item => item.id === idProduk);
+            if (index === -1) return;
+
+            keranjang[index].jumlah += perubahan;
+
+            // Jika jumlah menjadi 0 atau kurang, hapus item dari keranjang
+            if (keranjang[index].jumlah <= 0) {
+                keranjang.splice(index, 1);
+            }
+
+            perbaruiTampilanKeranjang();
+        }
+
+        function hapusItem(idProduk) {
+            keranjang = keranjang.filter(item => item.id !== idProduk);
+            perbaruiTampilanKeranjang();
+            tampilkanNotifikasi("Item dihapus dari keranjang", "🗑️");
+        }
+
+        function perbaruiTampilanKeranjang() {
+            // Hitung total kuantitas dan total harga
+            const totalItem = keranjang.reduce((total, item) => total + item.jumlah, 0);
+            const totalBayar = keranjang.reduce((total, item) => total + (item.harga * item.jumlah), 0);
+
+            // Update angka badge di Header & Hero
+            document.getElementById("badge-keranjang").textContent = totalItem;
+            document.getElementById("hero-cart-count").textContent = totalItem;
+
+            // Update bar melayang khusus layar HP (Mobile)
+            const mobileBar = document.getElementById("floating-cart-bar");
+            document.getElementById("mobile-badge-count").textContent = `${totalItem} Item`;
+            document.getElementById("mobile-total-price").textContent = formatRupiah(totalBayar);
+
+            if (totalItem > 0) {
+                mobileBar.classList.remove("translate-y-24", "opacity-0", "pointer-events-none");
+                mobileBar.classList.add("translate-y-0", "opacity-100");
+            } else {
+                mobileBar.classList.add("translate-y-24", "opacity-0", "pointer-events-none");
+                mobileBar.classList.remove("translate-y-0", "opacity-100");
+            }
+
+            // Update isi modal keranjang
+            const wadahIsi = document.getElementById("isi-keranjang");
+            const formPemesan = document.getElementById("form-pemesan-container");
+            const btnWhatsapp = document.getElementById("btn-whatsapp");
+
+            if (keranjang.length === 0) {
+                wadahIsi.innerHTML = `
+                    <div class="text-center py-10 px-4">
+                        <div class="text-5xl mb-3">🍨</div>
+                        <h4 class="font-bold text-pabiChoco text-lg">Keranjang Masih Kosong</h4>
+                        <p class="text-sm text-amber-900/70 mt-1 mb-5">Yuk pilih Es Cream Gabin Chocolate atau Cookies & Cream dulu!</p>
+                        <button onclick="tutupKeranjang()" class="bg-pabiPink text-white font-bold text-sm px-5 py-2.5 rounded-full cursor-pointer">
+                            Pilih Menu Sekarang
+                        </button>
+                    </div>
+                `;
+                formPemesan.classList.add("hidden");
+                btnWhatsapp.disabled = true;
+            } else {
+                wadahIsi.innerHTML = keranjang.map(item => `
+                    <div class="bg-white border border-pink-200 rounded-2xl p-3.5 shadow-xs flex items-center justify-between gap-3">
+                        <div class="flex-1">
+                            <h5 class="font-bold text-pabiChoco text-sm sm:text-base leading-snug">${item.nama}</h5>
+                            <p class="text-xs font-semibold text-pabiPink mt-0.5">${formatRupiah(item.harga)} / pcs</p>
+                            <p class="text-xs font-bold text-amber-900/80 mt-1">Subtotal: ${formatRupiah(item.harga * item.jumlah)}</p>
+                        </div>
+
+                        <!-- Kontrol Jumlah (+ / -) dan Hapus -->
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center bg-pabiSoft rounded-xl p-1 border border-pink-200">
+                                <button onclick="ubahJumlah('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-white text-pabiChoco font-bold hover:bg-pabiPink hover:text-white transition-colors cursor-pointer" aria-label="Kurangi jumlah">-</button>
+                                <span class="w-8 text-center font-bold text-sm text-pabiChoco">${item.jumlah}</span>
+                                <button onclick="ubahJumlah('${item.id}', 1)" class="w-7 h-7 rounded-lg bg-white text-pabiChoco font-bold hover:bg-pabiPink hover:text-white transition-colors cursor-pointer" aria-label="Tambah jumlah">+</button>
+                            </div>
+                            <button onclick="hapusItem('${item.id}')" class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors cursor-pointer" title="Hapus item" aria-label="Hapus item">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                `).join("");
+
+                formPemesan.classList.remove("hidden");
+                btnWhatsapp.disabled = false;
+            }
+
+            // Update rincian total harga di bagian bawah modal
+            document.getElementById("subtotal-harga").textContent = formatRupiah(totalBayar);
+            document.getElementById("total-harga").textContent = formatRupiah(totalBayar);
+        }
+
+        /* ===================================================================
+           KONTROL BUKA & TUTUP MODAL KERANJANG
+           =================================================================== */
+        function bukaKeranjang() {
+            document.getElementById("modal-keranjang").classList.remove("hidden");
+            document.body.style.overflow = "hidden"; // Mencegah layar belakang ikut ter-scroll
+        }
+
+        function tutupKeranjang() {
+            document.getElementById("modal-keranjang").classList.add("hidden");
+            document.body.style.overflow = "";
+        }
+
+        /* ===================================================================
+           FUNGSI CHECKOUT & KIRIM PESANAN KE WHATSAPP
+           =================================================================== */
+        function pesanViaWhatsApp() {
+            if (keranjang.length === 0) {
+                tampilkanNotifikasi("Keranjang belanja masih kosong!", "⚠️");
+                return;
+            }
+
+            const namaPemesan = document.getElementById("input-nama").value.trim();
+            const alamatPemesan = document.getElementById("input-alamat").value.trim();
+
+            // Validasi form sederhana agar nama & alamat tidak kosong
+            if (!namaPemesan) {
+                tampilkanNotifikasi("Mohon isi Nama Pemesan terlebih dahulu!", "📝");
+                document.getElementById("input-nama").focus();
+                return;
+            }
+            if (!alamatPemesan) {
+                tampilkanNotifikasi("Mohon isi Alamat / Catatan pengiriman!", "📍");
+                document.getElementById("input-alamat").focus();
+                return;
+            }
+
+            // Susun daftar rincian pesanan
+            let daftarItemTeks = "";
+            let totalHarga = 0;
+
+            keranjang.forEach((item, index) => {
+                const subtotal = item.harga * item.jumlah;
+                totalHarga += subtotal;
+                daftarItemTeks += `${index + 1}. *${item.nama}* (${item.jumlah}x) = ${formatRupiah(subtotal)}\n`;
+            });
+
+            // Format pesan WhatsApp yang rapi dan sopan
+            const pesanWA = 
+`Halo *Pabi Para - Es Cream Gabin*! 🍦
+Saya ingin memesan:
+
+*Daftar Pesanan:*
+${daftarItemTeks}
+*Total Pembayaran: ${formatRupiah(totalHarga)}*
+
+*Data Pemesan:*
+• Nama: ${namaPemesan}
+• Alamat/Catatan: ${alamatPemesan}
+
+Mohon informasi ketersediaan dan total ongkirnya ya. Terima kasih! 😊`;
+
+            // Encode pesan agar aman dibaca URL browser, lalu buka WhatsApp
+            const urlWhatsApp = `https://wa.me/${NOMOR_WHATSAPP_TOKO}?text=${encodeURIComponent(pesanWA)}`;
+            window.open(urlWhatsApp, "_blank");
+        }
+
+        // Jalankan saat halaman pertama kali dibuka
+        window.addEventListener("DOMContentLoaded", () => {
+            renderKatalog();
+            perbaruiTampilanKeranjang();
+        });
+    </script>
+</body>
+</html>
